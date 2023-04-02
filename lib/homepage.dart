@@ -159,8 +159,7 @@ class _LoginpageState extends State<Loginpage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              Mainpage(),
+                          builder: (context) => Mainpage(),
                         ),
                       );
                     }
@@ -173,14 +172,17 @@ class _LoginpageState extends State<Loginpage> {
                   children: [
                     Text('Does not have account?'),
                     TextButton(
-                      onPressed: () {Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              Regiterpage(),
-                        ),
-                      );},
-                      child: const Text('Sign Up',),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Regiterpage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Sign Up',
+                      ),
                     ),
                   ],
                 ),
@@ -193,12 +195,205 @@ class _LoginpageState extends State<Loginpage> {
   }
 }
 
-class Regiterpage extends StatelessWidget {
-  const Regiterpage({super.key});
+class Regiterpage extends StatefulWidget {
+  const Regiterpage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
+  }
+
+  @override
+  State<Regiterpage> createState() => _RegisterpageState();
+}
+
+class _RegisterpageState extends State<Regiterpage> {
+  final _formKey = GlobalKey<FormState>();
+  bool hidepass = true;
+  String? name;
+  String? email;
+  String? pass;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Form(
+            child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Loginpage(),
+                  ),
+                );
+
+                setState(() {});
+              },
+              child: const Icon(Icons.west),
+              style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 255, 175, 55)),
+            ),
+            Image.network(
+              "https://gazettereview.com/wp-content/uploads/2016/08/Pokemon-Go-1.jpg",
+              width: 100,
+              height: null,
+            ),
+            Text('Register'),
+            Padding(
+              padding: const EdgeInsets.only(left: 35, right: 35),
+              child: TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'please enter your name';
+                  }
+                  if (value.length < 6) {
+                    return 'password must be more than 6 charater';
+                  }
+                },
+                onSaved: (Value) {
+                  name = Value;
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Name',
+                  labelStyle: TextStyle(color: Colors.blue),
+                  prefixIcon: Icon(Icons.person, color: Colors.blue),
+                  hintText: 'Enter Your name',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 35, right: 35),
+              child: TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'please enter your email';
+                  }
+                  if (!value!.contains('@')) {
+                    return 'Please enter a valid email';
+                  }
+                },
+                onSaved: (Value) {
+                  email = Value;
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Colors.blue),
+                  prefixIcon: Icon(Icons.mail, color: Colors.blue),
+                  hintText: 'Enter Your Email',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 35, right: 35),
+              child: TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'please enter your email';
+                  }
+                  if (!value!.contains('@')) {
+                    return 'Please enter a valid email';
+                  }
+                },
+                onSaved: (Value) {
+                  email = Value;
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Colors.blue),
+                  prefixIcon: Icon(Icons.mail, color: Colors.blue),
+                  hintText: 'Enter Your Email',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 35, right: 35),
+              child: TextFormField(
+                obscureText: hidepass,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'please enter your password';
+                  }
+                  if (value.length < 6) {
+                    return 'password must be more than 6 charater';
+                  }
+                },
+                onSaved: (value) {
+                  pass = value;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.blue),
+                  prefixIcon: Icon(Icons.lock, color: Colors.blue),
+                  hintText: 'Enter Your Password',
+                  suffixIcon: IconButton(
+                    icon: hidepass
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        hidepass = !hidepass;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 35, right: 35),
+              child: TextFormField(
+                obscureText: hidepass,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'please enter your password';
+                  }
+                  if (value != pass) {
+                    return 'password must be the same';
+                  }
+                },
+                onSaved: (value) {
+                  pass = value;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Re-Password',
+                  labelStyle: TextStyle(color: Colors.blue),
+                  prefixIcon: Icon(Icons.lock, color: Colors.blue),
+                  hintText: 'Enter Your Re-Password',
+                  suffixIcon: IconButton(
+                    icon: hidepass
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        hidepass = !hidepass;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ),
+            ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Mainpage(),
+                        ),
+                      );
+                    }
+                    setState(() {});
+                  },
+                  child: Text('Register'),
+                ),
+          ],
+        )),
+      )),
+    );
   }
 }
 
